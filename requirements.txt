@@ -1,0 +1,10 @@
+google-ai-generativelanguage
+google-auth
+langchain
+langchain-community
+langchain-core
+langchain-google-genai
+langchain-openai
+python-dotenv
+fastapi
+uvicorn
