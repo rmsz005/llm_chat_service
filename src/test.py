@@ -1,6 +1,5 @@
 import http.client
 import json
-from time import sleep
 
 
 class GeminiClient:

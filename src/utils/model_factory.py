@@ -1,4 +1,4 @@
-from models.llms import GoogleGemini, OpenAIGPT
+from llm_models.llms import GoogleGemini, OpenAIGPT
 
 
 class ModelFactory:
