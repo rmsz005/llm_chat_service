@@ -1,10 +1,17 @@
-Certainly! Here's a more streamlined and professional version of your README that avoids repeating information available in the OpenAPI documentation:
 
 ---
 
 # llm_chat
 
 `llm_chat` is a robust backend system built with Python and FastAPI, designed to facilitate dynamic interactions with large language models (LLMs). The system supports both user-driven conversations and automated LLM-to-LLM dialogues, allowing users to engage or intervene at any point.
+
+[comment]: <> (Badge sources: https://github.com/Envoy-VC/awesome-badges or https://mdb.pushkaryadav.in/generate)
+
+![Python](https://img.shields.io/badge/python-3670A0?logo=python&logoColor=ffdd54&style=for-the-badge)
+![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?logo=gnu-bash&logoColor=white&style=for-the-badge)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?logo=fastapi&style=for-the-badge)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?logo=mysql&logoColor=white&style=for-the-badge)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?logo=docker&logoColor=white&style=for-the-badge)
 
 ## Features
 
