@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - LLM_MODEL_GEMINI_API_KEY=${GOOGLE_API_KEY}
+      - CONFIG_FILE_PATH=/config.yml
+    volumes:
+      - ./config/config.yml:/config.yml
+      - .:/app

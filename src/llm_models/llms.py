@@ -1,3 +1,4 @@
+import asyncio
 from abc import ABC, abstractmethod
 
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -9,12 +10,12 @@ class LLM(ABC):
         self.temperature = temperature
 
     @abstractmethod
-    def invoke(self, prompt, system=None):
+    async def invoke(self, prompt, system=None):
         pass
 
-    def invoke_with_retries(self, answer_prompt, max_retries=3):
+    async def invoke_with_retries(self, answer_prompt, max_retries=3):
         for attempt in range(max_retries):
-            answer = self.invoke(answer_prompt)
+            answer = await self.invoke(answer_prompt)
             if answer:  # Check if answer is not empty
                 return answer
             print(f"Attempt {attempt + 1} failed, retrying...")
@@ -27,10 +28,9 @@ class GoogleGemini(LLM):
         super().__init__(temperature)
         self.llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=api_key)
 
-    def invoke(self, prompt, system=None):
-        response = self.llm.invoke(prompt)
+    async def invoke(self, prompt, system=None):
+        response = await asyncio.to_thread(self.llm.invoke, prompt)
         return response.content
-
 
 
 class OpenAIGPT(LLM):
@@ -38,6 +38,7 @@ class OpenAIGPT(LLM):
         super().__init__(temperature)
         self.llm = ChatOpenAI(model=model_name, api_key=api_key, temperature=temperature)
 
-    def invoke(self, prompt, system=None):
+    async def invoke(self, prompt, system=None):
         messages = [("system", system), ("human", prompt)] if system else [("human", prompt)]
-        return self.llm.invoke(messages).content
+        response = await asyncio.to_thread(self.llm.invoke, messages)
+        return response.content
