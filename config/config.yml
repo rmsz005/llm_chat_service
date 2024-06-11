@@ -1,0 +1,8 @@
+llm_chat:
+  history_repo:
+    backend: "in_memory"
+  chat_service:
+    models:
+      - backend: "gemini"
+        temperature: 0.5
+        api_key: "YOUR_GOOGLE_API_KEY"

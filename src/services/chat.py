@@ -11,9 +11,9 @@ class ChatService:
         self.config = config
         self.session_manager = session_manager
         self.models = {}
-        for model_config in config['models']:
+        for model_config in config.models:
             model = ModelFactory.create_model(model_config)
-            self.models[model_config['model_type']] = model
+            self.models[model_config.backend] = model
 
     async def start_new_session(self, model_name: str, starter: str) -> dict:
         session_id = str(uuid.uuid4())
