@@ -1,8 +1,12 @@
 llm_chat:
   history_repo:
-    backend: "in_memory"
+    backend: "disk"
+    path: data/chat_history
   chat_service:
     models:
       - backend: "gemini"
-        temperature: 0.5
+        temperature: 1
         api_key: "YOUR_GOOGLE_API_KEY"
+      - backend: "gpt-4o"
+        temperature: 1
+        api_key: "YOUR_OPENAPI_API_KEY"

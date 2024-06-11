@@ -6,6 +6,7 @@ from pydantic.env_settings import BaseSettings
 
 class HistoryRepoConfig(BaseModel):
     backend: str = Field(..., env='HISTORY_REPO_BACKEND')
+    path: str = Field(..., env='HISTORY_REPO_STORAGE_PATH')
 
 
 class LLMModelConfig(BaseModel):
@@ -31,7 +32,7 @@ class Config(BaseSettings):
         case_sensitive = False
 
 
-def get_config():
+def load_config():
     # Get the config file path from an environment variable
     config_path = os.getenv('CONFIG_FILE_PATH', 'config/config.yml')
 
@@ -50,7 +51,3 @@ def get_config():
         model.api_key = os.getenv(f'LLM_MODEL_{model_name}_API_KEY', model.api_key)
 
     return config.llm_chat
-
-# Example usage
-config = get_config()
-print(config)

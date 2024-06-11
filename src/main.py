@@ -7,24 +7,9 @@ from domain.models import NewSessionRequest, MessageResponse, MessageRequest, Ge
 app = FastAPI()
 
 
-def custom_openapi():
-    if app.openapi_schema:
-        return app.openapi_schema
-    openapi_schema = get_openapi(
-        title="llm_chat api",
-        version="1.0.0",
-        description="This is a very cool project 420!",
-        routes=app.routes,
-    )
-    app.openapi_schema = openapi_schema
-    return app.openapi_schema
-
-
-app.openapi = custom_openapi
-
-
 @app.post("/start_conversation")
-async def start_conversation(request: NewSessionRequest, chat_service=Depends(get_chat_service)) -> MessageResponse:
+async def start_conversation(request: NewSessionRequest,
+                             chat_service=Depends(get_chat_service)) -> MessageResponse:
     """
     Starts a new conversation session.
     """
@@ -42,7 +27,8 @@ async def send_message(request: MessageRequest, chat_service=Depends(get_chat_se
 
 
 @app.post("/generate_message")
-async def generate_message(request: GenerateMessageRequest, chat_service=Depends(get_chat_service)) -> MessageResponse:
+async def generate_message(request: GenerateMessageRequest,
+                           chat_service=Depends(get_chat_service)) -> MessageResponse:
     """
     Generates a message in an existing conversation session.
     """
@@ -65,6 +51,21 @@ def get_session_history(session_id: str, chat_service=Depends(get_chat_service))
     """
     return chat_service.get_session_history(session_id)
 
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="llm_chat api",
+        version="1.0.0",
+        description="This is a very cool project 420!",
+        routes=app.routes,
+    )
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
 
 if __name__ == "__main__":
     import uvicorn
