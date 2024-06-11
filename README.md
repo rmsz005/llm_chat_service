@@ -41,6 +41,14 @@ make up
 
 Then, open your browser and navigate to `http://localhost:8000/docs` to view the API documentation.
 
+## Cli example usage
+
+```sh 
+python cli.py
+```
+![Description](doc/cli_example.png)
+
+
 ## Contributing
 
 We welcome contributions! Please feel free to open an issue or submit a pull request for any enhancements or bug fixes.
