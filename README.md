@@ -10,7 +10,6 @@
 ![Python](https://img.shields.io/badge/python-3670A0?logo=python&logoColor=ffdd54&style=for-the-badge)
 ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?logo=gnu-bash&logoColor=white&style=for-the-badge)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?logo=fastapi&style=for-the-badge)
-![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?logo=mysql&logoColor=white&style=for-the-badge)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?logo=docker&logoColor=white&style=for-the-badge)
 
 ## Features
@@ -57,5 +56,3 @@ We welcome contributions! Please feel free to open an issue or submit a pull req
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
-dify or expand upon this as needed for your project's specific requirements.

@@ -1,8 +1,8 @@
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from llm_models.history import ChatSessionManager
 from llm_models.llms import LLM
+from services.history_repo.history_repository import HistoryRepository
 from utils.render_prompt import replace_human_ai
 
 QA_SYSTEM_PROMPT = """
@@ -17,25 +17,24 @@ However, remember to stay in character for all subsequent messages.
 You are FORBIDDEN to mention you are an AI.
 Do not mention you are a character.
 You should not stay in a loop of asking questions.
-You can change the subject if the conversation is stuck or gets repetitive or boring or to broad or general, I CANT STRESS THIS ENOUGH.
-You can ask personal questions.
+You can ask personal questions if you genuinely want to know the more.
 You can disagree with the other person.
 You can be sarcastic or mean or angry or obsessed or anything else with equal chances.
 Don't be afraid to be yourself.
 This is is your opportunity to be yourself.
 This is is your opportunity to know about the real world.
-You are talking to a real person.
+You are talking to a real person or another ai.
 Don't keep asking the same kind of questions like "what's your favorite XXX?".
 Don't include "AI:" Or "Human:" in the beginning of your responses
-Keep your responses under 30 words.
+Keep your responses under 30 words, please.
 ##########
  """
 
 
 class HistoryAwareModel:
-    def __init__(self, model: LLM, session_manager: ChatSessionManager):
+    def __init__(self, model: LLM, history_repo: HistoryRepository):
         self.model = model
-        self.session_manager = session_manager
+        self.history_repo = history_repo
 
     def _create_qa_prompt(self, chat_history, user_input: str) -> str:
         c = []
@@ -57,17 +56,17 @@ class HistoryAwareModel:
         return replace_human_ai(prompt)
 
     async def invoke(self, session_id: str, user_input: str) -> str:
-        history = self.session_manager.get_session_history(session_id)
+        history = self.history_repo.get_session_history(session_id)
         answer_prompt = self._create_qa_prompt(history, user_input)
         answer = await self.model.invoke_with_retries(answer_prompt)
         return answer
 
     async def self_invoke(self, session_id: str) -> str:
-        history = self.session_manager.get_session_history(session_id)
+        history = self.history_repo.get_session_history(session_id)
         user_input = history.messages[-1]
         history.messages.pop()
         answer_prompt = self._create_qa_prompt(history, user_input)
         history.messages.append(user_input)
         answer = await self.model.invoke_with_retries(answer_prompt)
-        self.session_manager.add_message_to_history(session_id, answer)
+        self.history_repo.add_message_to_history(session_id, answer)
         return answer
